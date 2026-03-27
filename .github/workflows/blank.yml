@@ -1,0 +1,34 @@
+name: Sync from Gitee
+
+on:
+  # 允许手动触发同步
+  workflow_dispatch:
+  # 定时任务：每隔 6 小时同步一次 (可以根据需求修改)
+  schedule:
+    - cron: '0 */6 * * *'
+
+jobs:
+  repo-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout GitHub Repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # 获取完整历史记录
+
+      - name: Sync from Gitee
+        run: |
+          # 配置 Git 用户信息（可选，建议配置）
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
+          
+          # 添加 Gitee 为远程仓库
+          git remote add gitee https://gitee.com/Mercator/vibe-research.git
+          
+          # 拉取 Gitee 的所有分支和标签
+          git fetch gitee --tags
+          
+          # 将 Gitee 的所有分支强制推送到 GitHub (origin)
+          # 注意：这会以 Gitee 为准，覆盖 GitHub 上的同名分支
+          git push origin --all --force
+          git push origin --tags --force
