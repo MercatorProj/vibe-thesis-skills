@@ -1,15 +1,150 @@
-# Vibe Research
+# Vibe Research 学术技能包
 
-Welcome to the Vibe Research repository! This project aims to explore the various aspects of vibe research and its implications.
+一个面向学术研究与论文写作的工作流技能库。通过标准化的技能（Skills）与项目文档（agents.md），让 AI Agent 能够像靠谱的师兄师姐一样，帮你推进论文写作、文献处理、格式规范等任务。
 
-## Getting Started
+**适用工具**：本仓库设计为在本地或远程工作区中由各类 **Agent / 编程助手** 读取与调用，包括但不限于 **OpenCode**、**Cursor**、**Claude Code**、**Trae**、**OpenClaw** 等；技能目录在磁盘上可能呈现为 `.opencode/skills/`、`.cursor/skills/` 等路径，**以你所用工具与本机配置为准**。
 
-To get started with the project, follow the instructions below.
+许可与对外分发见 [DISTRIBUTION.md](DISTRIBUTION.md)。技能触发场景、路由规则与项目约定见 [agents.md](agents.md)。
 
-## Contributing
+---
 
-We welcome contributions to this project. Please see the CONTRIBUTING.md file for more information.
+## 核心理念
 
-## License
+**「Vibe Research」** = 别先啃完整个仓库，像聊天一样告诉 Agent 你卡在哪里、有什么材料、想要什么结果；Agent 会按任务读取对应的 `SKILL.md` 执行。
 
-This project is licensed under the MIT License.
+---
+
+## 主要内容
+
+### Skills（技能）
+
+每个子文件夹对应一个标准化工作流，Agent 会根据任务自动选取。下表为速查；**触发场景与「同一任务只选一个」等规则以 [agents.md](agents.md) 为准。**
+
+| 技能 | 功能 |
+|------|------|
+| **literature** | 文献检索、阅读综述、插入引用、BibTeX 生成 |
+| **academic-writing** | 学术写作润色、人味化改写（去 AI 痕迹） |
+| **latex-compile** | XeLaTeX 编译学位论文 PDF |
+| **formula-normalizer** | 数学公式规范化、符号一致性检查 |
+| **chapter-structure-refactor** | 章节结构整体重构与逻辑梳理 |
+| **thesis-reviewer** | 学位论文评审、语义审查、AI 风格检查 |
+| **image-description** | 论文插图学术描述撰写 |
+| **svg-flowchart** | 学术风格流程图生成 |
+| **pdf** | PDF 文本提取、表格提取、表单填充 |
+| **docx** | Word 文档创建、编辑、修订 Accept |
+| **systematic-review-lite** | 轻量系统综述与 PRISMA 筛选流程 |
+| **mcp-builder** | MCP Server 开发指南与评估 |
+| **skill-creator** | 创建新技能的工具与模板 |
+
+**Skills** 是通用菜谱：**agents.md** 是你家厨房的调料柜位置——记录题目、章节习惯、路径约定与技能路由，随项目推进由你与 Agent 共同维护。
+
+### agents.md
+
+项目专属的配置文件，记录你的论文题目、章节习惯、路径约定、技能路由等。不必先通读；需要时打开，或让 Agent 按你的确认更新。
+
+---
+
+## 快速开始
+
+1. **打开本仓库**（或与你的论文项目放在同一工作区，让 Agent 能读到 `skills`）。
+2. **直接开口**：说明你是谁、写什么、当前这一步需要什么；有材料就贴正文、给路径或上传文件。
+3. **可选**：加一句「请按本仓库 **skills** 执行，需要时先问我再更新 **agents.md**」；或让 Agent 选对流程后自己去读 `SKILL.md`，长期约定写入 `agents.md` 前先征得你同意。
+
+技能目录在你电脑上可能是 `.opencode/skills/` 或 `.cursor/skills/`，以本机为准。
+
+### 示例开场白
+
+```
+我在写硕士论文，题目是《……》。使用 LaTeX，实验用 PyTorch。
+不知道从哪一章开始写比较顺，请帮我排个写作顺序，并说明每节大概内容。
+```
+
+更完整的多场景开场白与多轮接话见下文「教程：第一句话与多轮对话」。
+
+---
+
+## 教程：第一句话与多轮对话
+
+别从路由表开始。除上例外，可在段尾加一句「万能尾巴」（任选或改写）：
+
+- 「请根据本仓库的 **skills** 选对流程，自己去读对应的 `SKILL.md`；如果对我这个项目有长期适用的约定，**先问我一句**，再帮我补进 **agents.md**。」
+- 简短版：「请按本仓库 skills 执行；需要记录项目习惯时，提议更新 agents.md。」
+
+若你已知道技能名，也可以直说：「请按 **literature** 技能做。」
+
+**三句完整开场示例（改题目和格式即可）：**
+
+```text
+我在写硕士论文，题目暂定《高校快递驿站出库流量峰值预测及其与周边奶茶店排队长度的时空耦合分析——基于 PyTorch 的实证研究》。
+LaTeX，章节都在「论文章节」里；实验部分打算用 PyTorch。
+不知道从哪一章动笔比较顺，你帮我排个顺序，顺便说说每一节大概写什么。
+```
+
+```text
+我要投一篇中文期刊的综述，题目是《电动汽车低温工况续航里程争议的话语建构与传播机制：知识演化与主题共现的文献述评》。
+正文用 Markdown 写。你先给我一版章节大纲，再给每节几个检索关键词（最好中英文都有），我去下文献。
+```
+
+```text
+期末有一篇读书报告，题目《1859 年以降澳大利亚穴兔扩散与有袋类生态位竞争的历时性考察——兼论引入物种治理政策的文献综述》，按老师说的课程报告来就行。
+帮我列个提纲、5～8 个检索词，再说说适合引专著还是论文还是报告之类。
+```
+
+同一篇东西很少一轮搞定。每一轮照旧：**要做什么、动哪一段/哪个文件、字数或格式有没有要求**。
+
+### 路线 A：学位论文 + 实验
+
+| 轮次 | 你可以怎么说 |
+|------|----------------|
+| 开场 | 用上面论文示例整段；需要就加「万能尾巴」维护 agents.md。 |
+| 第 2 轮 | 「agents.md 按你的草案我改好了。请帮我在**绪论**里写一段与 PyTorch 实验相关的**方法预见**，约 400 字，LaTeX 片段，可放在 `论文章节` 里某个 `.tex`。」 |
+| 第 3 轮 | 「上一段保留，请把**公式和符号**改成学位论文常用写法，并标建议插入的 `\label`/章节位置。」 |
+| 第 4 轮 | 「请按 literature **插入引用**模式，在该段末加 2 篇支撑文献，给出带 `\cite{}` 的句子；`.bib` 路径按我 agents.md 里的约定。」 |
+
+### 路线 B：期刊综述（接续「电动汽车」那种开场）
+
+| 轮次 | 你可以怎么说 |
+|------|----------------|
+| 开场 | 用综述示例整段。 |
+| 第 2 轮 | 「我按你给的检索词下载了几篇 PDF，路径在 `refs/综述_01.pdf` 等，请按 literature **阅读模式**分别做短笔记，并标注与综述大纲各节的对应关系。」 |
+| 第 3 轮 | 「请把笔记合并成**第二节（传播机制与话语框架）**的 Markdown 正文，约 1500 字，**全程期刊综述腔**，不要吐槽题目。」 |
+| 第 4 轮 | 「请按期刊常见要求给一个**参考文献列表草稿**（可先作者-年份体例），并标出哪些条目需要我补 DOI。」 |
+
+### 路线 C：课程读书报告
+
+| 轮次 | 你可以怎么说 |
+|------|----------------|
+| 开场 | 用读书报告示例整段。 |
+| 第 2 轮 | 「提纲我满意。请按提纲写**正文第一部分**（引入背景与问题界定），800 字左右，**课程论文书面语**，可少量引用。」 |
+| 第 3 轮 | 「全文合成一版，总字数压到 2500 以内，并加一段**参考文献**（5 条即可，课程作业级别）。」 |
+
+### 单轮也能用：开口即任务
+
+不打算拉长对话时，直接一句需求 + 材料即可，例如：
+
+- 「把下面这段 LaTeX **润色**成学术中文，并检查术语是否统一。」（下面粘贴正文）
+- 「我的主文件在 `论文章节/Thesis.tex`，请按 latex-compile 给我 **Windows PowerShell** 下编译 PDF 的命令。」
+
+---
+
+## 文件结构
+
+```
+├── .opencode/skills/          # 技能目录（本机也可能是 .cursor/skills/）
+│   ├── literature/            # 文献技能
+│   ├── academic-writing/      # 学术写作
+│   ├── latex-compile/         # LaTeX 编译
+│   ├── ...                    # 其他技能
+├── agents.md                  # 项目配置（你的用车手册）
+├── DISTRIBUTION.md            # 分发许可说明
+└── README.md                  # 本文件
+```
+
+---
+
+## 相关文档
+
+- [agents.md](agents.md) — 技能路由表与项目约定（详表以该文件为准）
+- [DISTRIBUTION.md](DISTRIBUTION.md) — 许可与分发说明
+
+**Vibe Research** 的用法：**先说话、后补细节**；仓库替你存流程，你只管说清楚「这一步要什么」。
